@@ -38,7 +38,8 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/resource.js',
-            'src/GameScene.js'
+            'src/GameScene.js',
+            'src/Ball.js'
         ]
     };
 

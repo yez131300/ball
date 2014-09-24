@@ -3,6 +3,7 @@
  */
 var GameScene   = cc.Scene.extend({
     gameLayer:null,
+    ball:null,
     onEnter:function(){
         this._super();
         //add layer
@@ -15,7 +16,15 @@ var GameScene   = cc.Scene.extend({
 
         //set position
         bg.setAnchorPoint(cc.p(0,0));
-        bg.setPosition(cc.p(0,0.5));
+        bg.setPosition(cc.p(0,0));
+
+         this.ball =new Ball();
+         this.gameLayer.addChild(this.ball,1);
+
+        this.schedule(this.update,0);
+    },
+    update:function(dt){
+       this.ball.update(dt);
     }
 });
 /*
