@@ -5,7 +5,7 @@
 var BearSprite = cc.Sprite.extend({
     velocity: null,
     radius: 25, //碰撞半径
-    curSence:null,
+//    curSence:null,
     //构造函数，当new一个当前的实例时，会执行ctor
     ctor: function () {
         this._super();
