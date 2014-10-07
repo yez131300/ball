@@ -4,7 +4,8 @@ var Ball = cc.Sprite.extend({
     count :1,
     ctor:function(){
         this._super();
-        this.initWithFile(s_ball);//赋予图片元素
+        //this.initWithFile(s_ball);//赋予图片元素
+        this.initWithTexture("000");
         this.initData();
     },
     initData:function(){
