@@ -15,7 +15,7 @@ var JieCao = cc.Sprite.extend({
         this.pic=picture;
         this.initWithFile(this.pic);
         this.x =Math.round(Math.random()*400);
-        this.y=Math.round(Math.random()*280);
+        this.y=Math.round(Math.random()*250);
         this.setAnchorPoint(0,0);
         this.setPosition(this.x,this.y);
     },

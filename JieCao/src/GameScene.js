@@ -15,6 +15,10 @@ var GameScene   = cc.Scene.extend({
     score : null,
     winSize: cc.size(480, 320),//屏幕大小
     point : 0,  //分数
+    gameTime : null,
+    min : 10,
+    sec : 0,
+    timeLable :null,
     onEnter:function(){
         this._super();
         //add layer
@@ -48,10 +52,18 @@ var GameScene   = cc.Scene.extend({
         this.score.setPosition(cc.p(this.winSize.width - 30, this.winSize.height - 21));
         this.score.setColor(cc.c3b(117, 76, 36));//改变颜色
         this.gameLayer.addChild(this.score, 2);
+
+        //时间
+        this.timeLable = cc.LabelTTF.create(this.showTime(),"Arial",18);
+        this.timeLable.setPosition(cc.p(30, this.winSize.height - 21));
+        this.timeLable.setColor(cc.c3b(117, 76, 36));//改变颜色
+        this.gameLayer.addChild(this.timeLable, 2);
     },
     startGame:function(){
       this.gameStatus = g_GameStatus.normal;
       this.btnStart.setVisible(false);//隐藏开始按钮
+      //开始计时
+      this.gameTime = new Date().getTime();
     },
     createJiecao:function(){
         if(this.jieCaoList.length >= this.jieCaoCountLimit)
@@ -93,9 +105,23 @@ var GameScene   = cc.Scene.extend({
                 this.score.setString(this.point+"");
             }
         }
+
+        //减少时间
+        //更新时间
+
+
            //新建“节操”.
         this.count++;
         if(this.count % this.frequency == 0)
         this.createJiecao();
+    },
+    showTime : function(){
+        var second;
+        if(this.sec <10){
+            second = "0"+this.sec;
+        }else{
+            second = ""+this.sec;
+        }
+        return (this.min+" : "+second)
     }
 });
