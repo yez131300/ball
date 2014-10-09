@@ -5,6 +5,7 @@ var g_GameStatus={normal:0,stop:1,gameOver:2};
 var GameScene   = cc.Scene.extend({
     gameLayer:null,
     btnStart: null,  //开始按钮
+    btnRestart: null,//重新开始按钮
     picList : [s_j1,s_j2,s_j3,s_j4],
     newJieCao : null,
     jieCaoList : new Array(),
@@ -16,9 +17,10 @@ var GameScene   = cc.Scene.extend({
     winSize: cc.size(480, 320),//屏幕大小
     point : 0,  //分数
     gameTime : null,
-    min : 10,
-    sec : 0,
-    timeLable :null,
+    min : 0,
+    sec : 20,
+    timeLabel :null,
+    summaryLabel : null,
     onEnter:function(){
         this._super();
         //add layer
@@ -46,6 +48,13 @@ var GameScene   = cc.Scene.extend({
         var infoMenu = cc.Menu.create(this.btnStart);
         this.gameLayer.addChild(infoMenu, 2);
 
+        //重新开始按钮
+        var restartSprite = cc.Sprite.create(s_restart);
+        var reselectedSprite = cc.Sprite.create(s_restart);
+        this.btnRestart = cc.MenuItemSprite.create(restartSprite,reselectedSprite,this.restart,this);
+        var infoMenu2 = cc.Menu.create(this.btnRestart);
+        this.gameLayer.addChild(infoMenu2, 2);
+        this.btnRestart.setVisible(false);//开始时候隐藏
 
         //分数功能 //参数1：字符串  参数2：字体(系统字体)  参数3：文字大小
         this.score = cc.LabelTTF.create("0","Arial",18);
@@ -54,16 +63,18 @@ var GameScene   = cc.Scene.extend({
         this.gameLayer.addChild(this.score, 2);
 
         //时间
-        this.timeLable = cc.LabelTTF.create(this.showTime(),"Arial",18);
-        this.timeLable.setPosition(cc.p(30, this.winSize.height - 21));
-        this.timeLable.setColor(cc.c3b(117, 76, 36));//改变颜色
-        this.gameLayer.addChild(this.timeLable, 2);
+        this.timeLabel = cc.LabelTTF.create(this.showTime(),"Arial",18);
+        this.timeLabel.setPosition(cc.p(30, this.winSize.height - 21));
+        this.timeLabel.setColor(cc.c3b(117, 76, 36));//改变颜色
+        this.gameLayer.addChild(this.timeLabel, 2);
+
     },
     startGame:function(){
       this.gameStatus = g_GameStatus.normal;
       this.btnStart.setVisible(false);//隐藏开始按钮
       //开始计时
       this.gameTime = new Date().getTime();
+	  cc.log("-----------"+this.gameTime+"-----------------");
     },
     createJiecao:function(){
         if(this.jieCaoList.length >= this.jieCaoCountLimit)
@@ -92,8 +103,18 @@ var GameScene   = cc.Scene.extend({
     },
     update:function(dt){
         //游戏为开始的时候才运行。
-        if(this.gameStatus != g_GameStatus.normal) return;
+        if(this.gameStatus == g_GameStatus.gameOver){
 
+            this.over();
+            return;
+        }
+        //重新开始
+        if(this.gameStatus == g_GameStatus.stop && this.count!=0){
+
+            this.btnRestart.setVisible(true);
+            return;
+        }
+        if(this.gameStatus != g_GameStatus.normal) return;
            //清除已经点击的“节操”。
         for(i=0;i<this.jieCaoList.length;i++){
 //            cc.log("["+i+"] is "+this.jieCaoList[i].isHit);
@@ -106,10 +127,21 @@ var GameScene   = cc.Scene.extend({
             }
         }
 
-        //减少时间
-        //更新时间
-
-
+        //减少时间 1秒更新一次
+		if(new Date().getTime() - this.gameTime >= 1000){
+			this.decTime( Math.floor((new Date().getTime() - this.gameTime)/1000 ));
+			this.gameTime = new Date().getTime();
+			//更新时间
+			if(this.min < 0 || (this.min ==0 && this.sec == 0)){
+			//时间到，游戏结束
+				this.gameStatus = g_GameStatus.gameOver;
+				this.timeLabel.setString("00 : 00");
+				cc.log("++++++++++++"+this.gameTime+"++++++++++++++++");
+			}else{
+				this.timeLabel.setString(this.showTime());
+			}
+		}
+       
            //新建“节操”.
         this.count++;
         if(this.count % this.frequency == 0)
@@ -122,6 +154,52 @@ var GameScene   = cc.Scene.extend({
         }else{
             second = ""+this.sec;
         }
-        return (this.min+" : "+second)
+		
+		var minutes;
+		 if(this.min <10){
+            minutes = "0"+this.min;
+        }else{
+            minutes = ""+this.min;
+        }
+        return (minutes+" : "+second)
+    },
+	decTime : function(diff){
+		this.sec -= diff;
+		while(this.sec < 0){
+			this.sec += 60;
+			this.min --;
+		}
+	},
+
+    //游戏结束
+    over : function(){
+        //清空所以的“节操”
+        for(i=0;i<this.jieCaoList.length;i++){
+            this.jieCaoList[i].setVisible(false);
+        }
+        var massage = "游戏结束！恭喜拾获了"+this.point+"个节操";
+
+        this.summaryLabel = cc.LabelTTF.create(massage,"Arial",22);
+        this.summaryLabel.setPosition(cc.p(240, 220));
+        this.summaryLabel.setColor(cc.c3b(117, 76, 36));//改变颜色
+        this.gameLayer.addChild(this.summaryLabel, 2);
+
+        this.gameStatus = g_GameStatus.stop;
+    },
+
+    //重新开始
+    restart :function(){
+        //状态恢复
+        this.jieCaoList =new Array();
+        this.point = null;
+        this.min=0;
+        this.sec =20;
+        this.count =0;
+        this.score.setString("0");
+        this.timeLabel.setString(this.showTime());
+        this.gameTime = new Date().getTime();
+        this.gameStatus =g_GameStatus.normal;
+        this.btnRestart.setVisible(false);
+        this.summaryLabel.setVisible(false);
     }
 });
