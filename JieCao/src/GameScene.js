@@ -6,7 +6,7 @@ var GameScene   = cc.Scene.extend({
     gameLayer:null,
     btnStart: null,  //开始按钮
     btnRestart: null,//重新开始按钮
-    picList : [s_j1,s_j2,s_j3,s_j4],
+    picList : [s_j1,s_j2,s_j3,s_j4,s_j5,s_j6,s_j7,s_j8,s_j9,s_j10,s_j11,s_j12,s_j13,s_j14,s_j15,s_j16],
     newJieCao : null,
     jieCaoList : new Array(),
     count:null,
@@ -18,7 +18,7 @@ var GameScene   = cc.Scene.extend({
     point : 0,  //分数
     gameTime : null,
     min : 0,
-    sec : 20,
+    sec : 30,
     timeLabel :null,
     summaryLabel : null,
     onEnter:function(){
@@ -79,7 +79,7 @@ var GameScene   = cc.Scene.extend({
     createJiecao:function(){
         if(this.jieCaoList.length >= this.jieCaoCountLimit)
         return ;
-        var index = new Date().getSeconds()%4;
+        var index = new Date().getTime()% this.picList.length;
         this.newJieCao = new JieCao();
         this.newJieCao.initData(this.picList[index]);
         if(this.jieCaoList.length == 0){
@@ -144,7 +144,7 @@ var GameScene   = cc.Scene.extend({
        
            //新建“节操”.
         this.count++;
-        if(this.count % this.frequency == 0)
+        if(this.count % (this.jieCaoList.length+1) == 0)
         this.createJiecao();
     },
     showTime : function(){
@@ -177,9 +177,21 @@ var GameScene   = cc.Scene.extend({
         for(i=0;i<this.jieCaoList.length;i++){
             this.jieCaoList[i].setVisible(false);
         }
-        var massage = "游戏结束！恭喜拾获了"+this.point+"个节操";
 
-        this.summaryLabel = cc.LabelTTF.create(massage,"Arial",22);
+        var massage =null;
+        if(this.point == 0){
+            massage = "你没救了!!!"
+        }else if(this.point <= 40){
+            massage = "居然让你捡回了一点节操，不要放弃！"
+        }else if(this.point <=60){
+            massage = "矮油~不错噢！节操还在啊~"
+        }else if(this.point <=80){
+            massage = "牛逼哄哄！有本事你来超越我啊！"
+        }else{
+            massage = "哼~凡人，别闹了好吗？这才叫节操！"
+        }
+
+        this.summaryLabel = cc.LabelTTF.create(this.point+"分 : "+massage,"Arial",22);
         this.summaryLabel.setPosition(cc.p(240, 220));
         this.summaryLabel.setColor(cc.c3b(117, 76, 36));//改变颜色
         this.gameLayer.addChild(this.summaryLabel, 2);
@@ -193,7 +205,7 @@ var GameScene   = cc.Scene.extend({
         this.jieCaoList =new Array();
         this.point = null;
         this.min=0;
-        this.sec =20;
+        this.sec =30;
         this.count =0;
         this.score.setString("0");
         this.timeLabel.setString(this.showTime());
