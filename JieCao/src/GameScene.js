@@ -203,7 +203,7 @@ var GameScene   = cc.Scene.extend({
     restart :function(){
         //状态恢复
         this.jieCaoList =new Array();
-        this.point = null;
+        this.point = 0;
         this.min=0;
         this.sec =30;
         this.count =0;
