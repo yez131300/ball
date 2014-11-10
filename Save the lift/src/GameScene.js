@@ -1,4 +1,4 @@
-/**
+200/**
  * Created by xihe on 2014/8/23.
  */
 var GameScene   = cc.Scene.extend({
