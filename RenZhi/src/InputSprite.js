@@ -2,8 +2,8 @@ var InputSprite = cc.Sprite.extend({
 	gameScene:null,
 	picture:null,
 	value:null,
-	width:null,
-	height:null,
+//	width:null,
+//	height:null,
 	ctor:function(){
 		this._super();
 //		cc.Director.getInstance().getTouchDispatcher().addTargetedDelegate(this, 0, true);
