@@ -15,6 +15,7 @@
         "src/app.js",
         "src/GameLayer.js",
         "src/InputSprite.js",
-        "src/BgLayer.js"
+        "src/BgLayer.js",
+        "src/FrontLayer.js"
     ]
 }

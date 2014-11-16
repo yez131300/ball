@@ -4,10 +4,15 @@ var GameScene = cc.Scene.extend({
         this._super();
 
         var layer = new BgLayer();
-        this.addChild(layer,0);
+        this.addChild(layer);
         
         var gameLayer = new GameLayer();
-        this.addChild(gameLayer,1);
+        this.addChild(gameLayer);
+        
+        var frontLayer = new FrontLayer();
+        //------------pass the point.
+        frontLayer.setPoint("22222");
+        this.addChild(frontLayer)
     }
 });
 

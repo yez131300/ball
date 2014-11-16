@@ -30,7 +30,7 @@ var GameLayer = cc.Layer.extend({
 		//init the number label
 		this.numberLabel = cc.LabelTTF.create(this.showNumberList(), "Helvetica", 20);
 		this.numberLabel.setColor(cc.color(0,0,0));//black color
-		this.numberLabel.setPosition(cc.winSize.width/2, cc.winSize.height - 20);
+		this.numberLabel.setPosition(cc.winSize.width/2, cc.winSize.height - 50);
 		this.addChild(this.numberLabel);
 		
 		this.schedule(this.update,0);
