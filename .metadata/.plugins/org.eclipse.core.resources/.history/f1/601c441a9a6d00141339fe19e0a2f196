@@ -1,0 +1,14 @@
+var FrontLayer = cc.Layer.extend({
+	point:null,
+	start:null,
+	showPoint : function(){
+		var label = cc.LabelTTF.create(this.point, "Helvetica", 20);
+		label.setColor(cc.color(255,0,0));//black color
+		label.setPosition(cc.winSize.width-50, cc.winSize.height - 20);
+		this.addChild(label);
+	},
+	setPoint:function(point){
+		this.point =point;
+		this.start = true;
+	}
+});
