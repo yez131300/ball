@@ -142,6 +142,10 @@
             <sources dir="${basedir}">
                 <file name="src/resource.js"/>
                 <file name="src/app.js"/>
+                <file name="src/GameLayer.js"/>
+                <file name="src/BgLayer.js"/>
+                <file name="src/FrontLayer.js"/>
+                <file name="src/RenZhiSprite.js"/>
                 <file name="main.js"/>
 
             </sources>

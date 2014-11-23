@@ -1,0 +1,19 @@
+
+var GameScene = cc.Scene.extend({
+	gameLayer:null,
+	frontLayer:null,
+    onEnter:function () {
+        this._super();
+
+        var layer = new BgLayer();
+        this.addChild(layer);
+        
+        this.gameLayer = new GameLayer();
+        this.addChild(this.gameLayer);
+        
+        this.frontLayer = new FrontLayer();
+        frontLayer.setPoint("22222");
+        this.addChild(frontLayer)
+    }
+});
+

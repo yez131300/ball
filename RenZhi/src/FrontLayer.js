@@ -19,7 +19,7 @@ var FrontLayer = cc.Layer.extend({
 		this.start = true;
 	},
 	update:function(dt){
-//		cc.log("==========================="+this.point);
+		
 		this.showPoint();
 		
 	}

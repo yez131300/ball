@@ -1,0 +1,149 @@
+var GameLayer = cc.Layer.extend({
+	oneSprite : null,
+	zeroSprite : null,
+	currentInputValue:null,
+	currentValue:null,
+	numberList : [],
+	size:null,
+	numberLabel:null,
+	count : 0,
+	updateLatency:60,
+	gameStatus:0,   // 0--> normal  1-->over
+	renZhiList:[],
+	finishAct:true,
+	moveTime : 1,
+	fadeOutTime:0.5,
+	point:0,
+	onEnter:function(){
+		this._super();
+		// init one sprite
+
+		var oneItemPlay = cc.MenuItemSprite.create(cc.Sprite.create(res.one_png),
+				cc.Sprite.create(res.one_png),
+				this.inputOne, this);
+		var oneMenu = cc.Menu.create(oneItemPlay);
+		oneMenu.setPosition(200, 80);
+		this.addChild(oneMenu);
+		
+		// init zero sprite
+		var zeroItemPlay = cc.MenuItemSprite.create(cc.Sprite.create(res.zero_png),
+				cc.Sprite.create(res.zero_png),
+				this.inputZero,this);
+		var zeroMenu = cc.Menu.create(zeroItemPlay);
+		zeroMenu.setPosition(330, 80);
+		this.addChild(zeroMenu);
+		
+		this.initNumberList();
+		
+		//init the number label
+//		this.numberLabel = cc.LabelTTF.create(this.showNumberList(), "Helvetica", 20);
+//		this.numberLabel.setColor(cc.color(0,0,0));//black color
+//		this.numberLabel.setPosition(cc.winSize.width/2, cc.winSize.height - 50);
+//		this.addChild(this.numberLabel);
+		
+		
+		this.initRenzhi();
+
+		this.schedule(this.update);
+		this.schedule(this.updateRenZhi);
+	},
+	update:function(dt){
+		if(this.gameStatus == 1) return;
+		if(this.finishAct){
+			this.finishAct =false; // 重置标志
+			var act1 = cc.Sequence.create(
+					cc.MoveTo(this.moveTime, cc.p(55, 220)),
+					cc.CallFunc.create(this.finishMove,this));
+			var act2 =cc.Sequence.create(
+					cc.scaleBy(1,1.2),
+					cc.FadeOut.create(this.fadeOutTime),
+					cc.CallFunc.create(this.finishAction,this));
+			var act = cc.Sequence.create(act1,act2);
+			this.renZhiList[0].runAction(act);
+			
+		}
+	},
+	finishAction:function(){
+//		this.renZhiList.splice(0, 1);
+//		this.updateRenZhi();
+		this.finishAct =true;
+		if(this.currentInputValue == this.currentValue){
+			this.point ++;
+			this.currentInputValue = null; // reset the current input for next input
+			
+			// increase the speed
+			this.moveTime -= 0.05 * this.point;
+			if(this.moveTime <=0){
+				this.moveTime =0.1;
+			}
+		}else{
+			this.gameStatus = 1 //game over
+		}
+	},
+	finishMove:function(){
+		this.currentValue = this.renZhiList[0].value 
+		this.renZhiList.splice(0, 1);	
+	},
+	inputOne:function(){
+		this.currentInputValue =1;
+	},
+	inputZero:function(){
+		this.currentInputValue =0;
+	},
+	createRandom:function(){
+		return Math.round(Math.random());
+	},
+	initNumberList : function(){
+		this.size = 4;
+		for(var i = 0;i<this.size;i++){
+			this.numberList[i]=this.createRandom();
+		}
+	},
+	updateRenZhi:function(){
+		if(this.gameStatus == 1) return;
+		if(this.renZhiList.length<this.size){
+		this.numberList[this.size] = this.createRandom();
+		var renZhi = new RenZhiSprite();
+		if(this.numberList[this.size] == 1){
+			renZhi.initData(res.renOne_png,1);
+		}else{
+			renZhi.initData(res.renZero_png,0);
+		}
+		renZhi.setScale(40/100);
+		renZhi.setPosition(cc.winSize.width-45, 220)
+		for(var i = 0;i<this.size-1;i++){
+			this.renZhiList[i].runAction(
+					cc.moveTo(0.2,cc.p(cc.winSize.width-45*(this.size-i), 220)));
+		}
+		
+		this.addChild(renZhi);
+		this.renZhiList[this.size-1]=renZhi;
+		for(var i = 0;i<this.size;i++){
+			this.numberList[i] = this.numberList[i+1];
+			
+		}
+		}
+	},
+	showNumberList:function(){
+		var result = "";
+		for(var i = 0;i<this.size;i++){
+			result+=this.numberList[i];
+		}
+		return result;
+	},
+	initRenzhi:function(){
+		for(var i = 0;i<this.size;i++){
+			var renZhi = new RenZhiSprite();
+			if(this.numberList[i] == 1){
+				renZhi.initData(res.renOne_png,1);
+			}else{
+				renZhi.initData(res.renZero_png,0);
+			}
+			renZhi.setScale(40/100);
+			renZhi.setPosition(cc.winSize.width-45*(this.size-i), 220);
+			this.renZhiList[i]=renZhi;
+			this.addChild(renZhi);
+		}
+	},
+	
+});
