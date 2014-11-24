@@ -17,11 +17,7 @@ var GameScene = cc.Scene.extend({
         this.schedule(this.update);
     },
     update:function(dt){
-    	if(this.gameLayer.gameStatus == 1){
-    		this.frontLayer.setPoint("game over")
-    	}else{
-    		this.frontLayer.setPoint(this.gameLayer.point);  
-    	}
+    	this.frontLayer.setPoint(this.gameLayer.point);  	
     }
 });
 

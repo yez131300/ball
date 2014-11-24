@@ -53,13 +53,13 @@ var GameLayer = cc.Layer.extend({
 		if(this.finishAct){
 			this.finishAct =false; // 重置标志
 			var act1 = cc.Sequence.create(
-					cc.MoveTo.create(this.moveTime, cc.p(55, 220)),
+					cc.MoveTo(this.moveTime, cc.p(55, 220)),
 					cc.CallFunc.create(this.finishMove,this));
 			var act2 =cc.Sequence.create(
 					cc.scaleBy(this.scaleTime,1.2),
 					cc.FadeOut.create(this.fadeOutTime),
 					cc.CallFunc.create(this.finishAction,this));
-			var act = cc.Sequence.create(act1,act2);
+			var act = cc.Sequence.create(act1);
 			this.renZhiList[0].runAction(act);
 			
 		}
@@ -72,18 +72,18 @@ var GameLayer = cc.Layer.extend({
 			this.point ++;
 			this.currentInputValue = null; // reset the current input for next input
 			
-//			// increase the speed
-			this.moveTime -= 0.005*(this.point/5);
-			if(this.moveTime <=0.3){
-				this.moveTime =0.3;
+			// increase the speed
+			this.moveTime -= 0.005*(this.point/20);
+			if(this.moveTime <=0){
+				this.moveTime =0.2;
 			}
-			this.fadeOutTime -= 0.002*(this.point/5);
-			if(this.fadeOutTime <=0.35){
-				this.fadeOutTime =0.35;
+			this.fadeOutTime -= 0.002*(this.point/20);
+			if(this.fadeOutTime <=0){
+				this.fadeOutTime =0.3;
 			}
-			this.scaleTime -= 0.002*(this.point/5);
-			if(this.scaleTime <=0.35){
-				this.scaleTime =0.35;
+			this.scaleTime -= 0.002*(this.point/20);
+			if(this.scaleTime <=0){
+				this.scaleTime =0.3;
 			}
 			cc.log(this.moveTime + "---"+this.fadeOutTime+"----"+this.scaleTime)
 		}else{

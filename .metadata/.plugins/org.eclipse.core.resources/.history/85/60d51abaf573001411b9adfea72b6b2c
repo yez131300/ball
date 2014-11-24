@@ -11,9 +11,9 @@ var GameLayer = cc.Layer.extend({
 	gameStatus:0,   // 0--> normal  1-->over
 	renZhiList:[],
 	finishAct:true,
-	moveTime : 1,
-	fadeOutTime:0.5,
-	scaleTime:1,
+	moveTime : 0.3,
+	fadeOutTime:0.4,
+	scaleTime:0.4,
 	point:0,
 	onEnter:function(){
 		this._super();
@@ -73,21 +73,21 @@ var GameLayer = cc.Layer.extend({
 			this.currentInputValue = null; // reset the current input for next input
 			
 //			// increase the speed
-			this.moveTime -= 0.005*(this.point/5);
-			if(this.moveTime <=0.3){
-				this.moveTime =0.3;
-			}
-			this.fadeOutTime -= 0.002*(this.point/5);
-			if(this.fadeOutTime <=0.35){
-				this.fadeOutTime =0.35;
-			}
-			this.scaleTime -= 0.002*(this.point/5);
-			if(this.scaleTime <=0.35){
-				this.scaleTime =0.35;
-			}
+//			this.moveTime -= 0.005*(this.point/10);
+//			if(this.moveTime <=0){
+//				this.moveTime =0.2;
+//			}
+//			this.fadeOutTime -= 0.002*(this.point/10);
+//			if(this.fadeOutTime <=0){
+//				this.fadeOutTime =0.3;
+//			}
+//			this.scaleTime -= 0.002*(this.point/10);
+//			if(this.scaleTime <=0){
+//				this.scaleTime =0.3;
+//			}
 			cc.log(this.moveTime + "---"+this.fadeOutTime+"----"+this.scaleTime)
 		}else{
-			this.gameStatus = 1 //game over
+//			this.gameStatus = 1 //game over
 		}
 	},
 	finishMove:function(){
