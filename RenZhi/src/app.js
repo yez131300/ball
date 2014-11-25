@@ -18,8 +18,11 @@ var GameScene = cc.Scene.extend({
     },
     update:function(dt){
     	if(this.gameLayer.gameStatus == 1){
-    		this.frontLayer.setPoint("game over")
+    		// game over
+    		this.frontLayer.setPoint("")
+    		this.frontLayer.setSummary("Game Over");
     	}else{
+    		this.frontLayer.setSummary("");
     		this.frontLayer.setPoint(this.gameLayer.point);  
     	}
     }
