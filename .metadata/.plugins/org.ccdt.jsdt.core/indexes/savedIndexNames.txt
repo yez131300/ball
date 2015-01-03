@@ -1,8 +1,4 @@
 INDEX VERSION 1.3+F:\Roll_ball\ball\.metadata\.plugins\org.ccdt.jsdt.core\indexes
 1242898041.index
-2773850105.index
-3834348596.index
 4016761230.index
-2114704667.index
-3956444510.index
-3501549337.index
+1579914092.index

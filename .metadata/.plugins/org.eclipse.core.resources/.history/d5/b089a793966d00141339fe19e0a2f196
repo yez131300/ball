@@ -1,6 +1,0 @@
-var FrontLayer = cc.Layer.extend({
-	showPoint : function(point){
-		var label = cc.LabelTTF.create(point, "Helvetica", 20);
-		this.numberLabel.setColor(cc.color(255,0,0));//black color
-	}
-});
