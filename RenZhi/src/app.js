@@ -19,7 +19,7 @@ var GameScene = cc.Scene.extend({
     update:function(dt){
     	if(this.gameLayer.gameStatus == 1){
     		// game over
-    		this.frontLayer.setPoint("")
+    		this.frontLayer.setPoint("  ")
     		this.frontLayer.setSummary("Game Over");
     	}else{
     		this.frontLayer.setSummary("");
