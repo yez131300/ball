@@ -1,0 +1,36 @@
+var FrontLayer = cc.Layer.extend({
+	point:null,
+	lable:null,
+	summaryLabel:null,
+	summary:null,
+	onEnter: function() {
+		this._super();
+		this.label = cc.LabelTTF.create("", "Helvetica", 20);
+		this.label.setColor(cc.color(255,0,0));//black color
+		this.label.setPosition(cc.winSize.width-50, cc.winSize.height - 20);
+		this.addChild(this.label);
+		
+		
+		this.summaryLabel = cc.LabelTTF.create("", "Helvetica", 50);
+		this.summaryLabel.setColor(cc.color(0,0,255));//blue color
+		this.summaryLabel.setPosition(cc.winSize.width/2, cc.winSize.height/2);
+		this.addChild(this.summaryLabel);
+		this.schedule(this.update,0);
+	},
+	showPoint : function(){
+		this.label.setString(this.point+"");
+	},
+	showSummary : function(){
+		this.summaryLabel.setString(this.summary);
+	},
+	setPoint:function(point){
+		this.point =point;
+	},
+	setSummary:function(summary){
+		this.summary =summary;
+	},
+	update:function(dt){
+		this.showPoint();
+		this.showSummary()
+	}
+});
