@@ -80,11 +80,12 @@ var GameLayer = cc.Layer.extend({
 		this.renZhiList.splice(0, 1);
 	},
 	inputOne:function(){
+		console.log("11111111")
 		this.currentValue.push(1);
 		this.numberLabel.setString(this.showCurrentValueList());
 	},
 	inputZero:function(){
-//		console.log("000000000")
+		console.log("000000000")
 		this.currentValue.push(0);
 		this.numberLabel.setString(this.showCurrentValueList());
 	},
@@ -117,7 +118,7 @@ var GameLayer = cc.Layer.extend({
 	},
 	occurRenZhi : function(){
 		if(this.renZhiList.length >= this.size) return
-//		console.log("!!!!"+this.renZhiList.length)
+		console.log("!!!!"+this.renZhiList.length)
 		for(var i = 0;i<this.size;i++){
 			this.newRenZhi();
 		}

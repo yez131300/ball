@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.ccdt.debug.core.cocosLaunchConfigType">
+<mapAttribute key="argument_map">
+<mapEntry key="androidruntime" value="runtime/android/PrebuiltRuntimeJs.apk"/>
+<mapEntry key="host" value="127.0.0.1"/>
+<mapEntry key="project" value="RenZhi_V3"/>
+<mapEntry key="remotePlatform" value="Android"/>
+<mapEntry key="win32runtime" value="runtime/win32/PrebuiltRuntimeJs.exe"/>
+</mapAttribute>
+<stringAttribute key="connector_id" value="jsbinding.win32.attach.connector"/>
+</launchConfiguration>
