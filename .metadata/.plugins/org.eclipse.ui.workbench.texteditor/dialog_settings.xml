@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item value="updateRenZhi" key="selection"/>
+		<item value="renZhiList" key="selection"/>
 		<item value="true" key="incremental"/>
 		<list key="findhistory">
+			<item value="renZhiList"/>
 			<item value="updateRenZhi"/>
+			<item value="size"/>
+			<item value="occurRenZhi"/>
 			<item value="currentInputValue"/>
 			<item value="BgLayer"/>
 		</list>
